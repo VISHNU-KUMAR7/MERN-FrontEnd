@@ -6,14 +6,20 @@ import { useEffect, useState } from "react";
 const baseURL = "https://backend-dev-01.herokuapp.com/";
 
 function App() {
-
   const [post, setPost] = useState(null);
+  const [sample, setSample] = useState(null);
 
   useEffect(() => {
     axios.get(baseURL).then((response) => {
       setPost(response.data);
     });
   }, []);
+  useEffect(() => {
+    axios.get(`${baseURL}all`).then((response) => {
+      setSample(response.data);
+      console.log(response.data[0]);
+    });
+  });
 
   return (
     <div className="App">
@@ -31,6 +37,8 @@ function App() {
         >
           Learn React
         </a>
+        <button> Show Table</button>
+        {sample ? sample[0]["limit"] : "Data not found"}
       </header>
     </div>
   );
