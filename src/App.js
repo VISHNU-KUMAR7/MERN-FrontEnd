@@ -1,15 +1,19 @@
 import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const baseURL = "https://backend-dev-01.herokuapp.com/";
 
 function App() {
-  let data = new Promise(async (resolve, reject) => {
-    try {
-      const response = await axios.get("https://backend-dev-01.herokuapp.com/");
-      resolve(response);
-    } catch (e) {
-      reject(e);
-    }
-  });
+
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      setPost(response.data);
+    });
+  }, []);
 
   return (
     <div className="App">
@@ -18,7 +22,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <h2>{data}</h2>
+        <h2>{post}</h2>
         <a
           className="App-link"
           href="https://reactjs.org"
